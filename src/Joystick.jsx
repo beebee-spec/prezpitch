@@ -5,7 +5,7 @@ import { audio } from './AudioEngine'
 export default function JoystickUI() {
   const [isTouch, setIsTouch] = useState(false)
   const setJoystick = useStore((state) => state.setJoystick)
-  const setDash = useStore((state) => state.setDash)
+  const setZoom = useStore((state) => state.setZoom)
   const stunned = useStore((state) => state.stunned)
   
   const baseRef = useRef(null)
@@ -62,7 +62,7 @@ export default function JoystickUI() {
 
   return (
     <>
-      <div style={{ position: 'absolute', bottom: '40px', left: '40px', zIndex: 1000, touchAction: 'none', pointerEvents: 'auto' }}>
+      <div style={{ position: 'absolute', bottom: '20px', left: '20px', zIndex: 1000, touchAction: 'none', pointerEvents: 'auto' }}>
         <div 
           ref={baseRef}
           onTouchStart={handleTouch}
@@ -70,14 +70,14 @@ export default function JoystickUI() {
           onTouchEnd={handleEnd}
           onTouchCancel={handleEnd}
           style={{
-            width: '120px', height: '120px', 
+            width: '100px', height: '100px', 
             background: 'rgba(255, 255, 255, 0.1)', 
             borderRadius: '50%', border: '2px solid rgba(255, 255, 255, 0.3)',
             display: 'flex', justifyContent: 'center', alignItems: 'center', backdropFilter: 'blur(5px)'
           }}
         >
           <div style={{
-            width: '50px', height: '50px', background: 'rgba(255, 255, 255, 0.5)',
+            width: '40px', height: '40px', background: 'rgba(255, 255, 255, 0.5)',
             borderRadius: '50%', transform: `translate(${knobPos.x}px, ${knobPos.y}px)`, pointerEvents: 'none'
           }} />
         </div>
@@ -85,23 +85,21 @@ export default function JoystickUI() {
 
       <div 
         style={{ 
-          position: 'absolute', bottom: '40px', right: '40px', zIndex: 1000, 
-          width: '80px', height: '80px', borderRadius: '50%',
+          position: 'absolute', bottom: '20px', right: '20px', zIndex: 1000, 
+          width: '70px', height: '70px', borderRadius: '50%',
           background: stunned ? 'rgba(239, 68, 68, 0.5)' : 'rgba(74, 222, 128, 0.5)',
           display: 'flex', justifyContent: 'center', alignItems: 'center',
-          color: 'white', fontWeight: 'bold', border: '2px solid rgba(255,255,255,0.5)',
+          color: 'white', fontWeight: 'bold', fontSize: '14px', border: '2px solid rgba(255,255,255,0.5)',
           touchAction: 'none', pointerEvents: 'auto', backdropFilter: 'blur(5px)', userSelect: 'none'
         }}
         onTouchStart={(e) => {
-            if(!stunned) {
-                setDash(true)
-                audio.playDash()
-            }
+            e.preventDefault()
+            if(!stunned) setZoom(true)
         }}
-        onTouchEnd={() => setDash(false)}
-        onTouchCancel={() => setDash(false)}
+        onTouchEnd={(e) => { e.preventDefault(); setZoom(false); }}
+        onTouchCancel={(e) => { e.preventDefault(); setZoom(false); }}
       >
-        DASH
+        ZOOM
       </div>
     </>
   )

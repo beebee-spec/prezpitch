@@ -14,11 +14,62 @@ import { audio } from './AudioEngine'
 import './index.css'
 
 const INITIATIVES = [
-  { id: 0, title: "The Foundation", text: <p>A <strong>two-year CSF member</strong> who has written <strong>social media quizzes</strong>, <strong>daily research docs</strong>, <strong>speaker session reports</strong>, and <strong>creative writeups</strong> — consistently, and always with <strong>care</strong>.</p> },
-  { id: 1, title: "The Craft", text: <p>Someone who doesn't just <strong>produce content</strong> — she <strong>crafts it</strong>. <strong>Complex ideas</strong>, made <strong>relatable</strong>. One <strong>sharp phrase</strong> that makes the audience actually <strong>feel something</strong>.</p> },
-  { id: 2, title: "The Dot-Connector", text: <p>A <strong>dot-connector</strong> with an <strong>endlessly curious mind</strong> — she <strong>researches deeply</strong>, <strong>writes sharply</strong>, and always makes even the driest <strong>current affairs</strong> feel <strong>genuinely human</strong>.</p> },
-  { id: 3, title: "The Street Smart", text: <p><strong>Street smart</strong>, <strong>people-smart</strong>, and <strong>quick to learn</strong> — she <strong>talks to anyone</strong>, <strong>reads any room</strong>, and <strong>applies what she picks up</strong> faster than most.</p> },
-  { id: 4, title: "The Passion", text: <p><strong>Passionate</strong>, not performative. Two years in CSF with <strong>zero plans to stop caring</strong> — and <strong>every piece of work</strong> she's made proves exactly that.</p> }
+  { 
+    id: 0, 
+    title: "Why am I running? (1/2)", 
+    text: (
+      <div style={{ textAlign: 'left', fontSize: '1.2rem' }}>
+        <img src="/images/slide1.png" style={{ width: '100px', height: '100px', borderRadius: '10px', objectFit: 'cover', float: 'right', marginLeft: '15px', border: '2px dashed #be185d' }} alt="Graphic" />
+        <p>1. A <strong>dot-connector</strong> with an <strong>endlessly curious mind</strong> — she <strong>researches deeply</strong>, <strong>writes sharply</strong>, and always makes even the driest <strong>current affairs</strong> feel <strong>genuinely human</strong>.</p>
+        <p>2. Someone who doesn't just <strong>produce content</strong> — she <strong>crafts it</strong>. <strong>Complex ideas</strong>, made <strong>relatable</strong>. One <strong>sharp phrase</strong> that makes the audience actually <strong>feel something</strong>.</p>
+      </div>
+    )
+  },
+  { 
+    id: 1, 
+    title: "Why am I running? (2/2)", 
+    text: (
+      <div style={{ textAlign: 'left', fontSize: '1.2rem' }}>
+        <img src="/images/slide2.png" style={{ width: '100px', height: '100px', borderRadius: '10px', objectFit: 'cover', float: 'right', marginLeft: '15px', border: '2px dashed #be185d' }} alt="Graphic" />
+        <p>3. <strong>Street smart</strong>, <strong>people-smart</strong>, and <strong>quick to learn</strong> — she <strong>talks to anyone</strong>, <strong>reads any room</strong>, and <strong>applies what she picks up</strong> faster than most.</p>
+        <p>4. <strong>Passionate</strong>, not performative. Two years in CSF with <strong>zero plans to stop caring</strong> — and <strong>every piece of work</strong> she's made proves exactly that.</p>
+      </div>
+    )
+  },
+  { 
+    id: 2, 
+    title: "What will I do? (1/2)", 
+    text: (
+      <div style={{ textAlign: 'left', fontSize: '1.2rem' }}>
+        <img src="/images/slide3.png" style={{ width: '100px', height: '100px', borderRadius: '10px', objectFit: 'cover', float: 'right', marginLeft: '15px', border: '2px dashed #be185d' }} alt="Graphic" />
+        <p><strong>Mystery Speaker</strong>: <strong>Clue-drops</strong> on social media to build <strong>anticipation</strong> rather than just announcing the name of the speaker.</p>
+        <p><strong>Unpopular Opinion</strong>: Members pitch a <strong>controversial stance</strong>, the audience <strong>debates and votes</strong> to make it more <strong>engaging and alive</strong>.</p>
+      </div>
+    )
+  },
+  { 
+    id: 3, 
+    title: "What will I do? (2/2)", 
+    text: (
+      <div style={{ textAlign: 'left', fontSize: '1.2rem' }}>
+        <img src="/images/slide4.png" style={{ width: '100px', height: '100px', borderRadius: '10px', objectFit: 'cover', float: 'right', marginLeft: '15px', border: '2px dashed #be185d' }} alt="Graphic" />
+        <p><strong>Civil Servant for a Day</strong>: A storytelling series where members <strong>research and narrate</strong> what a <strong>real day in the life</strong> of a civil servant looks like.</p>
+        <p><strong>CSF Files</strong>: Real <strong>governance problem solving</strong> through <strong>creative solutions</strong>.</p>
+        <p><strong>CSF × ART</strong>: Current affairs through <strong>visual storytelling</strong> (political cartoons, infographics etc).</p>
+      </div>
+    )
+  },
+  { 
+    id: 4, 
+    title: "My Vision", 
+    text: (
+      <div style={{ textAlign: 'center', fontSize: '1.2rem' }}>
+        <img src="/images/profile.jpeg" style={{ width: '120px', height: '120px', borderRadius: '50%', objectFit: 'cover', margin: '0 auto 10px auto', display: 'block', border: '3px solid #be185d' }} alt="Bhargabi" />
+        <p>I want CSF to be a space where people don't just show up — they <strong>show UP</strong>. Where our team isn't just a team — but a <strong>community</strong> that's building <strong>something real</strong>.</p>
+        <p>I don't want to be remembered as a President who had <strong>great ideas</strong>. I want to be remembered as one who had great ideas — and actually <strong>made them happen</strong>.</p>
+      </div>
+    )
+  }
 ]
 
 const ALL_IMAGES = [
@@ -88,10 +139,10 @@ function UI({ started, setStarted }) {
       </div>
       
       {storyIndex !== -1 && !gameOver && (
-        <div className="story-modal">
+        <div className="story-modal" style={{ width: '95%', maxWidth: '500px' }}>
           <h2>{INITIATIVES[storyIndex].title}</h2>
           {INITIATIVES[storyIndex].text}
-          <button onClick={closeStory}>Continue Playing</button>
+          <button onClick={closeStory}>{storyIndex === 4 ? "Complete Pitch" : "Continue Playing"}</button>
         </div>
       )}
 
@@ -99,8 +150,7 @@ function UI({ started, setStarted }) {
         <div className="story-modal" style={{ border: '4px solid #fef08a' }}>
           <h2>VISION. ACTION. IMPACT.</h2>
           <p>You collected all pieces of the pitch and {score} votes in {time} seconds!</p>
-          <img src="/images/profile.jpeg" style={{ width: '150px', height: '150px', borderRadius: '50%', objectFit: 'cover', margin: '10px' }} />
-          <p style={{ color: '#f472b6', fontWeight: 'bold' }}>Vote Bhargabi Medhi for CSF KNC President (2026-27)</p>
+          <p style={{ color: '#be185d', fontWeight: 'bold', fontSize: '1.8rem', marginTop: '20px' }}>Vote Bhargabi Medhi for CSF KNC President (2026-27)</p>
           <button onClick={() => window.location.reload()}>Replay</button>
         </div>
       )}

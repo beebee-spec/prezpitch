@@ -8,7 +8,7 @@ export const useStore = create((set) => ({
   gameOver: false,
   
   joystick: { x: 0, y: 0 },
-  dashActive: false,
+  zoomActive: false,
   stunned: false,
   
   addScore: (points) => set((state) => ({ score: Math.max(0, state.score + points) })),
@@ -19,13 +19,17 @@ export const useStore = create((set) => ({
     return {
       initiativesCollected: newItems,
       storyIndex: sequentialStoryIndex,
-      score: state.score + 50,
-      gameOver: newItems.length >= 5
+      score: state.score + 50
     }
   }),
-  closeStory: () => set({ storyIndex: -1 }),
+  closeStory: () => set((state) => {
+    if (state.initiativesCollected.length >= 5) {
+      return { storyIndex: -1, gameOver: true }
+    }
+    return { storyIndex: -1 }
+  }),
   setJoystick: (x, y) => set({ joystick: { x, y } }),
-  setDash: (active) => set({ dashActive: active }),
+  setZoom: (active) => set({ zoomActive: active }),
   setStunned: (stunned) => set({ stunned }),
   tickTime: () => set((state) => {
     if (state.gameOver || state.storyIndex !== -1) return state

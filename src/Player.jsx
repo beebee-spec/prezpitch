@@ -19,25 +19,19 @@ export default function Player() {
   const playerRef = useRef()
   const indicatorRef = useRef()
   const baseSpeed = 10
-  const dashMultiplier = 3
   
   const keys = useRef({ w: false, a: false, s: false, d: false, ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false, ' ': false })
-  const [dashCooldown, setDashCooldown] = useState(0)
 
   useEffect(() => {
     const down = (e) => { 
       if (keys.current[e.key] !== undefined) keys.current[e.key] = true 
-      if (e.key === ' ') {
-         // trigger dash
-         if (!useStore.getState().stunned && dashCooldown <= 0) {
-           useStore.getState().setDash(true)
-           audio.playDash()
-         }
+      if (e.key === ' ' && !useStore.getState().stunned) {
+         useStore.getState().setZoom(true)
       }
     }
     const up = (e) => { 
       if (keys.current[e.key] !== undefined) keys.current[e.key] = false 
-      if (e.key === ' ') useStore.getState().setDash(false)
+      if (e.key === ' ') useStore.getState().setZoom(false)
     }
     window.addEventListener('keydown', down)
     window.addEventListener('keyup', up)
@@ -45,11 +39,11 @@ export default function Player() {
       window.removeEventListener('keydown', down)
       window.removeEventListener('keyup', up)
     }
-  }, [dashCooldown])
+  }, [])
 
   useFrame((state, delta) => {
     if (!playerRef.current) return
-    const { gameOver, storyIndex, stunned, dashActive, setDash } = useStore.getState()
+    const { gameOver, storyIndex, stunned, zoomActive } = useStore.getState()
     
     if (gameOver || storyIndex !== -1) return
 
@@ -58,18 +52,7 @@ export default function Player() {
       return
     }
 
-    if (dashCooldown > 0) {
-      setDashCooldown(prev => prev - delta)
-      if (dashCooldown <= 0 && keys.current[' '] === false) setDash(false)
-    }
-
-    // Dash logic (mobile uses dashActive from store)
     let currentSpeed = baseSpeed
-    if (dashActive && dashCooldown <= 0) {
-      currentSpeed = baseSpeed * dashMultiplier
-      setDashCooldown(1.5) // 1.5s cooldown
-      setTimeout(() => useStore.getState().setDash(false), 200) // dash lasts 0.2s
-    }
 
     const joystick = useStore.getState().joystick
     let dx = 0
@@ -102,8 +85,8 @@ export default function Player() {
 
     playerPos.copy(playerRef.current.position)
     
-    // Smooth camera follow and Dash Zoom
-    const targetZ = dashActive ? 22 : 15
+    // Smooth camera follow and Zoom
+    const targetZ = zoomActive ? 22 : 15
     state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, playerRef.current.position.x, 0.1)
     state.camera.position.y = THREE.MathUtils.lerp(state.camera.position.y, playerRef.current.position.y, 0.1)
     state.camera.position.z = THREE.MathUtils.lerp(state.camera.position.z, targetZ, 0.05)
@@ -136,12 +119,6 @@ export default function Player() {
       playerRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 15) * 0.1
     } else {
       playerRef.current.rotation.z = THREE.MathUtils.lerp(playerRef.current.rotation.z, 0, 0.1)
-    }
-    
-    if (dashActive) {
-      playerRef.current.scale.setScalar(2.5)
-    } else {
-      playerRef.current.scale.setScalar(2)
     }
   })
 
