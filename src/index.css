@@ -164,7 +164,14 @@ html, body, #root {
   transform: scale(1.05) rotate(2deg);
 }
 
-@media (max-width: 768px) {
+.mobile-controls {
+  display: none;
+}
+
+@media (max-width: 768px), (pointer: coarse) {
+  .mobile-controls {
+    display: block;
+  }
   .journey-map {
     top: 90px;
     padding: 10px 15px;

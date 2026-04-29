@@ -3,15 +3,12 @@ import { useStore } from './store'
 import { audio } from './AudioEngine'
 
 export default function JoystickUI() {
-  const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0
   const setJoystick = useStore((state) => state.setJoystick)
   const setZoom = useStore((state) => state.setZoom)
   const stunned = useStore((state) => state.stunned)
   
   const baseRef = useRef(null)
   const [knobPos, setKnobPos] = useState({ x: 0, y: 0 })
-
-  if (!isTouch) return null
 
   const handleTouch = (e) => {
     if (!baseRef.current) return
@@ -55,8 +52,8 @@ export default function JoystickUI() {
   }
 
   return (
-    <>
-      <div style={{ position: 'absolute', bottom: '20px', left: '20px', zIndex: 1000, touchAction: 'none', pointerEvents: 'auto' }}>
+    <div className="mobile-controls">
+      <div style={{ position: 'absolute', bottom: '80px', left: '20px', zIndex: 1000, touchAction: 'none', pointerEvents: 'auto' }}>
         <div 
           ref={baseRef}
           onTouchStart={handleTouch}
@@ -79,7 +76,7 @@ export default function JoystickUI() {
 
       <div 
         style={{ 
-          position: 'absolute', bottom: '20px', right: '20px', zIndex: 1000, 
+          position: 'absolute', bottom: '80px', right: '20px', zIndex: 1000, 
           width: '70px', height: '70px', borderRadius: '50%',
           background: stunned ? 'rgba(239, 68, 68, 0.5)' : 'rgba(74, 222, 128, 0.5)',
           display: 'flex', justifyContent: 'center', alignItems: 'center',
@@ -95,6 +92,6 @@ export default function JoystickUI() {
       >
         ZOOM
       </div>
-    </>
+    </div>
   )
 }

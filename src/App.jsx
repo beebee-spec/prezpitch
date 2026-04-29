@@ -170,6 +170,20 @@ function GameLoop({ started }) {
 
 export default function App() {
   const [started, setStarted] = useState(false)
+  const [aberrationOffset, setAberrationOffset] = useState([0.0008, 0.0008])
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setAberrationOffset([0.002, 0.002])
+      } else {
+        setAberrationOffset([0.0008, 0.0008])
+      }
+    }
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   const votes = React.useMemo(() => Array.from({ length: 30 }).map((_, i) => ({
     id: i,
@@ -205,7 +219,7 @@ export default function App() {
         
         <EffectComposer>
           <Bloom luminanceThreshold={0.4} luminanceSmoothing={0.9} height={300} />
-          <ChromaticAberration blendFunction={BlendFunction.NORMAL} offset={[0.002, 0.002]} />
+          <ChromaticAberration blendFunction={BlendFunction.NORMAL} offset={aberrationOffset} />
           <Vignette eskil={0.5} darkness={0.5} />
           <Pixelation granularity={2} />
         </EffectComposer>
