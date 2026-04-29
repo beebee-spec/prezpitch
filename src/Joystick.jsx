@@ -53,7 +53,7 @@ export default function JoystickUI() {
 
   return (
     <div className="mobile-controls">
-      <div style={{ position: 'absolute', bottom: '50px', left: '20px', zIndex: 1000, touchAction: 'none', pointerEvents: 'auto' }}>
+      <div style={{ position: 'absolute', bottom: '120px', left: '20px', zIndex: 1000, touchAction: 'none', pointerEvents: 'auto' }}>
         <div 
           ref={baseRef}
           onTouchStart={handleTouch}
@@ -76,7 +76,7 @@ export default function JoystickUI() {
 
       <div 
         style={{ 
-          position: 'absolute', bottom: '50px', right: '20px', zIndex: 1000, 
+          position: 'absolute', bottom: '120px', right: '20px', zIndex: 1000, 
           width: '70px', height: '70px', borderRadius: '50%',
           background: stunned ? 'rgba(239, 68, 68, 0.5)' : 'rgba(74, 222, 128, 0.5)',
           display: 'flex', justifyContent: 'center', alignItems: 'center',
