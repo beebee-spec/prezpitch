@@ -27,5 +27,8 @@ export const useStore = create((set) => ({
   setJoystick: (x, y) => set({ joystick: { x, y } }),
   setDash: (active) => set({ dashActive: active }),
   setStunned: (stunned) => set({ stunned }),
-  tickTime: () => set((state) => ({ time: state.time + 1 }))
+  tickTime: () => set((state) => {
+    if (state.gameOver || state.storyIndex !== -1) return state
+    return { time: state.time + 1 }
+  })
 }))

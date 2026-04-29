@@ -14,11 +14,11 @@ import { audio } from './AudioEngine'
 import './index.css'
 
 const INITIATIVES = [
-  { id: 0, title: "Who is Bhargabi?", text: "Senior Content Member at CSF KNC. I've shown up, contributed, and grown over the last 2 years. I believe in the power of articulation—making the complex feel human." },
-  { id: 1, title: "Why am I running?", text: "I have visions and I know how to put them into action. I want to build a tenure where people look back and say: that's when things really changed." },
-  { id: 2, title: "Mystery Speaker & Unpopular Opinion", text: "Mystery Speaker: Building anticipation with clue-drops. Unpopular Opinion: A platform for spicy, thoughtful takes on policy. Members debate, audience votes." },
-  { id: 3, title: "Day in the Life & CSF Files", text: "Civil Servant for a Day: Storytelling series narrating an officer's life. The CSF Files: Real governance problems solved creatively. CSF x Art: Visual storytelling." },
-  { id: 4, title: "My Vision", text: "A space where people don't just show up—they show UP. Vote Bhargabi Medhi for President, CSF KNC 2026-27. Vision. Action. Impact." }
+  { id: 0, title: "The Foundation", text: <p>A <strong>two-year CSF member</strong> who has written <strong>social media quizzes</strong>, <strong>daily research docs</strong>, <strong>speaker session reports</strong>, and <strong>creative writeups</strong> — consistently, and always with <strong>care</strong>.</p> },
+  { id: 1, title: "The Craft", text: <p>Someone who doesn't just <strong>produce content</strong> — she <strong>crafts it</strong>. <strong>Complex ideas</strong>, made <strong>relatable</strong>. One <strong>sharp phrase</strong> that makes the audience actually <strong>feel something</strong>.</p> },
+  { id: 2, title: "The Dot-Connector", text: <p>A <strong>dot-connector</strong> with an <strong>endlessly curious mind</strong> — she <strong>researches deeply</strong>, <strong>writes sharply</strong>, and always makes even the driest <strong>current affairs</strong> feel <strong>genuinely human</strong>.</p> },
+  { id: 3, title: "The Street Smart", text: <p><strong>Street smart</strong>, <strong>people-smart</strong>, and <strong>quick to learn</strong> — she <strong>talks to anyone</strong>, <strong>reads any room</strong>, and <strong>applies what she picks up</strong> faster than most.</p> },
+  { id: 4, title: "The Passion", text: <p><strong>Passionate</strong>, not performative. Two years in CSF with <strong>zero plans to stop caring</strong> — and <strong>every piece of work</strong> she's made proves exactly that.</p> }
 ]
 
 const ALL_IMAGES = [
@@ -45,6 +45,22 @@ const ALL_IMAGES = [
   '/images/WhatsApp Image 2026-04-29 at 11.20.04 PM.jpeg',
 ]
 
+function JourneyMap() {
+  const initiativesCollected = useStore(state => state.initiativesCollected)
+  const count = initiativesCollected.length
+  
+  return (
+    <div className="journey-map">
+      {[0, 1, 2, 3, 4].map(i => (
+        <React.Fragment key={i}>
+          <div className={`journey-node ${i < count ? 'filled' : ''}`} />
+          {i < 4 && <div className={`journey-line ${i < count - 1 ? 'filled' : ''}`} />}
+        </React.Fragment>
+      ))}
+    </div>
+  )
+}
+
 function UI({ started, setStarted }) {
   const { score, time, storyIndex, closeStory, gameOver } = useStore()
   
@@ -65,7 +81,7 @@ function UI({ started, setStarted }) {
 
   return (
     <div className="ui-layer">
-      <div className="glass-border"></div>
+      <JourneyMap />
       <div className="score-board">
         <div>Votes: {score}</div>
         <div style={{ fontSize: '0.8rem', opacity: 0.8 }}>Time: {time}s</div>
@@ -74,7 +90,7 @@ function UI({ started, setStarted }) {
       {storyIndex !== -1 && !gameOver && (
         <div className="story-modal">
           <h2>{INITIATIVES[storyIndex].title}</h2>
-          <p>{INITIATIVES[storyIndex].text}</p>
+          {INITIATIVES[storyIndex].text}
           <button onClick={closeStory}>Continue Playing</button>
         </div>
       )}
@@ -127,7 +143,7 @@ export default function App() {
         <ambientLight intensity={1} />
         <fog attach="fog" args={['#1e3a8a', 15, 40]} />
         
-        <SilkBackground speed={5} color="#be185d" noiseIntensity={1.5} rotation={0} />
+        <SilkBackground speed={5} color="#1e3a8a" noiseIntensity={1.5} rotation={0} />
         {started && <DomeGallery images={ALL_IMAGES} />}
         
         {votes.map(v => <Collectible key={`vote-${v.id}`} initialPosition={v.initialPosition} type="vote" />)}

@@ -1,6 +1,7 @@
 import React, { forwardRef, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Color } from 'three';
+import * as THREE from 'three';
 
 const hexToNormalizedRGB = (hex) => {
   const clean = hex.replace('#', '');
@@ -67,10 +68,25 @@ void main() {
 }
 `;
 
+const color1 = new THREE.Color('#1e3a8a'); // Deep Blue
+const color2 = new THREE.Color('#581c87'); // Deep Purple
+const color3 = new THREE.Color('#0f766e'); // Deep Teal
+const targetColor = new THREE.Color();
+
 const SilkPlane = forwardRef(function SilkPlane({ uniforms, ...props }, ref) {
   useFrame((state, delta) => {
     if (ref.current) {
-      ref.current.material.uniforms.uTime.value += 0.1 * delta;
+      const mat = ref.current.material;
+      mat.uniforms.uTime.value += 0.1 * delta;
+      
+      // Slowly cycle through creative colors to break monotony
+      const t = state.clock.elapsedTime * 0.1;
+      const phase = t % 3;
+      if (phase < 1) targetColor.lerpColors(color1, color2, phase);
+      else if (phase < 2) targetColor.lerpColors(color2, color3, phase - 1);
+      else targetColor.lerpColors(color3, color1, phase - 2);
+      
+      mat.uniforms.uColor.value.copy(targetColor);
     }
   });
 
@@ -82,7 +98,7 @@ const SilkPlane = forwardRef(function SilkPlane({ uniforms, ...props }, ref) {
   );
 });
 
-export default function SilkBackground({ speed = 5, scale = 1, color = '#be185d', noiseIntensity = 1.5, rotation = 0 }) {
+export default function SilkBackground({ speed = 5, scale = 1, color = '#1e3a8a', noiseIntensity = 1.5, rotation = 0 }) {
   const meshRef = useRef(null);
 
   const uniforms = useMemo(

@@ -7,8 +7,17 @@ import { audio } from './AudioEngine'
 
 export const playerPos = new THREE.Vector3()
 
+const initPositions = [
+  new THREE.Vector3(12, 12, 0),
+  new THREE.Vector3(-15, 18, 0),
+  new THREE.Vector3(18, -12, 0),
+  new THREE.Vector3(-18, -18, 0),
+  new THREE.Vector3(0, -22, 0)
+]
+
 export default function Player() {
   const playerRef = useRef()
+  const indicatorRef = useRef()
   const baseSpeed = 10
   const dashMultiplier = 3
   
@@ -93,9 +102,34 @@ export default function Player() {
 
     playerPos.copy(playerRef.current.position)
     
-    // Smooth camera follow
+    // Smooth camera follow and Dash Zoom
+    const targetZ = dashActive ? 22 : 15
     state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, playerRef.current.position.x, 0.1)
     state.camera.position.y = THREE.MathUtils.lerp(state.camera.position.y, playerRef.current.position.y, 0.1)
+    state.camera.position.z = THREE.MathUtils.lerp(state.camera.position.z, targetZ, 0.05)
+
+    // Waffle Indicator Logic
+    const collected = useStore.getState().initiativesCollected
+    let nearestDist = Infinity
+    let nearestPos = null
+    initPositions.forEach((pos, id) => {
+      if (!collected.includes(id)) {
+         const d = playerRef.current.position.distanceTo(pos)
+         if (d < nearestDist) {
+            nearestDist = d
+            nearestPos = pos
+         }
+      }
+    })
+
+    if (indicatorRef.current) {
+      if (nearestPos && nearestDist < 25 && nearestDist > 2.5) {
+        indicatorRef.current.visible = true
+        indicatorRef.current.rotation.z = Math.atan2(nearestPos.y - playerRef.current.position.y, nearestPos.x - playerRef.current.position.x)
+      } else {
+        indicatorRef.current.visible = false
+      }
+    }
 
     const isMoving = Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1
     if (isMoving) {
@@ -114,12 +148,14 @@ export default function Player() {
   return (
     <group ref={playerRef} position={[0, 0, 0]}>
       <Image url="/images/cat.png" scale={[1.5, 1.5]} transparent />
-      {useStore.getState().stunned && (
-        <mesh position={[0, 0, -0.1]}>
-          <circleGeometry args={[1.2, 16]} />
-          <meshBasicMaterial color="red" transparent opacity={0.5} />
+      
+      {/* Directional Indicator for Nearest Waffle */}
+      <group ref={indicatorRef} visible={false}>
+        <mesh position={[2, 0, -0.1]} rotation={[0, 0, -Math.PI / 2]}>
+          <coneGeometry args={[0.3, 0.8, 3]} />
+          <meshBasicMaterial color="#fef08a" />
         </mesh>
-      )}
+      </group>
     </group>
   )
 }
