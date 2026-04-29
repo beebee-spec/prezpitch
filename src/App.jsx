@@ -117,15 +117,38 @@ function UI({ started, setStarted }) {
   
   if (!started) {
     return (
-      <div className="ui-layer" style={{ justifyContent: 'center', alignItems: 'center', background: 'rgba(0,0,0,0.8)', pointerEvents: 'auto' }}>
-        <h1 style={{ fontFamily: 'Playfair Display', color: '#f472b6', fontSize: '4rem', margin: '0 0 20px 0', textAlign: 'center' }}>Vision. Action. Impact.</h1>
-        <p style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>Use WASD/Joystick to move. SPACE to dash.</p>
-        <p style={{ color: '#fef08a', marginBottom: '0.5rem' }}>Collect Waffles to unlock the story. Collect Flowers for Votes!</p>
-        <p style={{ color: '#ef4444', marginBottom: '2rem' }}>Avoid the bouncing red clouds!</p>
-        <button className="start-btn" onClick={() => {
-          audio.startBGM()
-          setStarted(true)
-        }}>Start Pitch</button>
+      <div className="start-screen">
+        <div className="start-modal">
+          <h1 className="start-title">prezpitch.</h1>
+          <h3 className="start-subtitle">A Gamified Manifesto by Bhargabi Medhi</h3>
+          
+          <div className="instructions-grid">
+            <div className="instruction-item">
+              <span className="instruction-icon">🎮</span>
+              <p>Use <strong>WASD / Arrows</strong> or the <strong>Joystick</strong> to move.</p>
+            </div>
+            <div className="instruction-item">
+              <span className="instruction-icon">🔍</span>
+              <p>Hold <strong>SPACE</strong> or the <strong>ZOOM Button</strong> to zoom out.</p>
+            </div>
+            <div className="instruction-item">
+              <span className="instruction-icon">🧇</span>
+              <p>Find the <strong>5 Pitch Pieces</strong> hidden in the gallery.</p>
+            </div>
+            <div className="instruction-item">
+              <span className="instruction-icon">☁️</span>
+              <p>Avoid the bouncing <strong>Red Clouds</strong>.</p>
+            </div>
+          </div>
+
+          <button className="start-button" onClick={() => {
+            useStore.setState({ score: 0, time: 0, storyIndex: -1, gameOver: false, initiativesCollected: [] })
+            audio.startBGM()
+            setStarted(true)
+          }}>
+            Start Pitch
+          </button>
+        </div>
       </div>
     )
   }
