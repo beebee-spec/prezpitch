@@ -163,3 +163,31 @@ html, body, #root {
   color: white;
   transform: scale(1.05) rotate(2deg);
 }
+
+@media (max-width: 768px) {
+  .journey-map {
+    top: 90px;
+    padding: 10px 15px;
+    gap: 8px;
+  }
+  .journey-node {
+    width: 20px;
+    height: 20px;
+  }
+  .journey-line {
+    width: 20px;
+  }
+  .score-board {
+    top: 15px;
+    right: 15px;
+    padding: 8px 15px;
+    font-size: 1rem;
+  }
+  .story-modal {
+    padding: 2.5rem 1.5rem 1.5rem 1.5rem;
+    font-size: 1.3rem;
+  }
+  .story-modal h2 {
+    font-size: 1.8rem;
+  }
+}

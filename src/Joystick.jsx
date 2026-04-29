@@ -3,19 +3,13 @@ import { useStore } from './store'
 import { audio } from './AudioEngine'
 
 export default function JoystickUI() {
-  const [isTouch, setIsTouch] = useState(false)
+  const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0
   const setJoystick = useStore((state) => state.setJoystick)
   const setZoom = useStore((state) => state.setZoom)
   const stunned = useStore((state) => state.stunned)
   
   const baseRef = useRef(null)
   const [knobPos, setKnobPos] = useState({ x: 0, y: 0 })
-
-  useEffect(() => {
-    const onTouch = () => setIsTouch(true)
-    window.addEventListener('touchstart', onTouch, { once: true })
-    return () => window.removeEventListener('touchstart', onTouch)
-  }, [])
 
   if (!isTouch) return null
 
