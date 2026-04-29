@@ -18,7 +18,7 @@ const INITIATIVES = [
     id: 0, 
     title: "Why am I running? (1/2)", 
     text: (
-      <div style={{ textAlign: 'left', fontSize: '1.2rem' }}>
+      <div style={{ textAlign: 'left' }}>
         <img src="/images/slide1.png" style={{ width: '100px', height: '100px', borderRadius: '10px', objectFit: 'cover', float: 'right', marginLeft: '15px', border: '2px dashed #be185d' }} alt="Graphic" />
         <p>1. A <strong>dot-connector</strong> with an <strong>endlessly curious mind</strong> — she <strong>researches deeply</strong>, <strong>writes sharply</strong>, and always makes even the driest <strong>current affairs</strong> feel <strong>genuinely human</strong>.</p>
         <p>2. Someone who doesn't just <strong>produce content</strong> — she <strong>crafts it</strong>. <strong>Complex ideas</strong>, made <strong>relatable</strong>. One <strong>sharp phrase</strong> that makes the audience actually <strong>feel something</strong>.</p>
@@ -29,7 +29,7 @@ const INITIATIVES = [
     id: 1, 
     title: "Why am I running? (2/2)", 
     text: (
-      <div style={{ textAlign: 'left', fontSize: '1.2rem' }}>
+      <div style={{ textAlign: 'left' }}>
         <img src="/images/slide2.png" style={{ width: '100px', height: '100px', borderRadius: '10px', objectFit: 'cover', float: 'right', marginLeft: '15px', border: '2px dashed #be185d' }} alt="Graphic" />
         <p>3. <strong>Street smart</strong>, <strong>people-smart</strong>, and <strong>quick to learn</strong> — she <strong>talks to anyone</strong>, <strong>reads any room</strong>, and <strong>applies what she picks up</strong> faster than most.</p>
         <p>4. <strong>Passionate</strong>, not performative. Two years in CSF with <strong>zero plans to stop caring</strong> — and <strong>every piece of work</strong> she's made proves exactly that.</p>
@@ -40,7 +40,7 @@ const INITIATIVES = [
     id: 2, 
     title: "What will I do? (1/2)", 
     text: (
-      <div style={{ textAlign: 'left', fontSize: '1.2rem' }}>
+      <div style={{ textAlign: 'left' }}>
         <img src="/images/slide3.png" style={{ width: '100px', height: '100px', borderRadius: '10px', objectFit: 'cover', float: 'right', marginLeft: '15px', border: '2px dashed #be185d' }} alt="Graphic" />
         <p><strong>Mystery Speaker</strong>: <strong>Clue-drops</strong> on social media to build <strong>anticipation</strong> rather than just announcing the name of the speaker.</p>
         <p><strong>Unpopular Opinion</strong>: Members pitch a <strong>controversial stance</strong>, the audience <strong>debates and votes</strong> to make it more <strong>engaging and alive</strong>.</p>
@@ -51,7 +51,7 @@ const INITIATIVES = [
     id: 3, 
     title: "What will I do? (2/2)", 
     text: (
-      <div style={{ textAlign: 'left', fontSize: '1.2rem' }}>
+      <div style={{ textAlign: 'left' }}>
         <img src="/images/slide4.png" style={{ width: '100px', height: '100px', borderRadius: '10px', objectFit: 'cover', float: 'right', marginLeft: '15px', border: '2px dashed #be185d' }} alt="Graphic" />
         <p><strong>Civil Servant for a Day</strong>: A storytelling series where members <strong>research and narrate</strong> what a <strong>real day in the life</strong> of a civil servant looks like.</p>
         <p><strong>CSF Files</strong>: Real <strong>governance problem solving</strong> through <strong>creative solutions</strong>.</p>
@@ -63,7 +63,7 @@ const INITIATIVES = [
     id: 4, 
     title: "My Vision", 
     text: (
-      <div style={{ textAlign: 'center', fontSize: '1.2rem' }}>
+      <div style={{ textAlign: 'center' }}>
         <img src="/images/profile.jpeg" style={{ width: '120px', height: '120px', borderRadius: '50%', objectFit: 'cover', margin: '0 auto 10px auto', display: 'block', border: '3px solid #be185d' }} alt="Bhargabi" />
         <p>I want CSF to be a space where people don't just show up — they <strong>show UP</strong>. Where our team isn't just a team — but a <strong>community</strong> that's building <strong>something real</strong>.</p>
         <p>I don't want to be remembered as a President who had <strong>great ideas</strong>. I want to be remembered as one who had great ideas — and actually <strong>made them happen</strong>.</p>
